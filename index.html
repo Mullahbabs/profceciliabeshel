@@ -432,7 +432,7 @@
                 <select id="attending" required>
                   <option value="yes">Yes, I will attend with joy!</option>
                   <option value="no">
-                    Regretfully, I cannot attend, but sending goodwill 
+                    Regretfully, I cannot attend, but sending goodwill
                   </option>
                 </select>
               </div>
@@ -440,7 +440,8 @@
                 <label>Message / Note</label>
                 <textarea
                   rows="2"
-                  id="message" required
+                  id="message"
+                  required
                   placeholder="Any special note or prayer..."
                 ></textarea>
               </div>
@@ -472,9 +473,7 @@
                   🌐 Outlook Live
                 </button>
               </div>
-              <div
-                style="font-size: 0.7rem; margin-top: 0.8rem; color: #6b5a3a"
-              >
+              <div style="font-size: 0.7rem; margin-top: 0.8rem; color: #fff">
                 ✓ Works on iPhone, Android, Mac, Windows — all devices
               </div>
             </div>
@@ -494,6 +493,7 @@
                   font-size: 0.7rem;
                   margin-top: 0.6rem;
                   text-align: center;
+                  color: #fff;
                 "
               >
                 *Celebrating every response, attending or not*
@@ -610,7 +610,7 @@
         // We'll also optionally show a little message in feedback.
         const feedbackDiv = document.getElementById("formFeedback");
         feedbackDiv.style.display = "block";
-        feedbackDiv.innerHTML = `✅ RSVP recorded! ${newEntry.attending === "yes" ? "We look forward to seeing you! 🎓" : "Thank you for your goodwill message ✨"} (Email notification simulated. Configure EmailJS to send actual mail.)`;
+        feedbackDiv.innerHTML = `✅ RSVP recorded! ${newEntry.attending === "yes" ? "We look forward to seeing you! 🎓" : "Thank you for your goodwill message ✨"}`;
         setTimeout(() => {
           if (feedbackDiv) feedbackDiv.style.opacity = "1";
           setTimeout(() => {
