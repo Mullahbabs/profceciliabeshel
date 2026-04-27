@@ -1,0 +1,817 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>Prof. Cecilia A. Beshel | Thanksgiving of Academic Excellence</title>
+    <!-- Google Fonts & simple animations -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background: #0a1f1e;
+        color: #1e2f2f;
+        line-height: 1.5;
+      }
+
+      /* Background Slideshow (fade between 4 images) */
+      .slideshow-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -2;
+        overflow: hidden;
+      }
+
+      .slide {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        opacity: 0;
+        transition: opacity 1.8s ease-in-out;
+        will-change: opacity;
+      }
+
+      /* subtle dark overlay for readability */
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.55);
+        z-index: -1;
+      }
+
+      /* Main container */
+      .container {
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 2rem 1.5rem 4rem;
+        position: relative;
+        z-index: 2;
+        backdrop-filter: blur(0px);
+      }
+
+      /* card style */
+      .card {
+        background: rgba(255, 255, 255, 0.12);
+        backdrop-filter: blur(2px);
+        border-radius: 2rem;
+        box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.35);
+        padding: 2rem 2rem 2.5rem;
+        transition: all 0.2s ease;
+        border: 1px solid rgba(255, 255, 240, 0.6);
+      }
+
+      @media (max-width: 640px) {
+        .container {
+          padding: 1rem 1rem 3rem;
+        }
+        .card {
+          padding: 1.5rem;
+        }
+      }
+
+      /* header section */
+      .event-header {
+        text-align: center;
+        margin-bottom: 2rem;
+        border-bottom: 2px dashed #c9a53b;
+        padding-bottom: 1.2rem;
+      }
+
+      .event-title {
+        font-size: 1.9rem;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        background: linear-gradient(135deg, #b8860b, #daa520, #4b2e1a);
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        margin-bottom: 0.5rem;
+      }
+
+      .honorific {
+        font-size: 1rem;
+        font-weight: 500;
+        color: #2c5a4a;
+        background: #fef5e0;
+        display: inline-block;
+        padding: 0.25rem 1rem;
+        border-radius: 40px;
+      }
+
+      .date-venue {
+        margin-top: 1rem;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+        font-weight: 500;
+        color: #2c5a4a;
+      }
+
+      .badge {
+        background: #f0ead0;
+        padding: 0.4rem 1rem;
+        border-radius: 40px;
+        font-size: 0.9rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      /* rsvp form grid */
+      .rsvp-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2.5rem;
+        margin: 2rem 0 2rem;
+      }
+
+      .form-col {
+        flex: 1;
+        min-width: 260px;
+      }
+
+      .form-group {
+        margin-bottom: 1.25rem;
+      }
+
+      label {
+        font-weight: 600;
+        display: block;
+        margin-bottom: 0.4rem;
+        color: #fff;
+      }
+
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 0.85rem 1rem;
+        border-radius: 1.2rem;
+        border: 1px solid #cfd9cf;
+        background: white;
+        font-family: inherit;
+        font-size: 0.95rem;
+        transition: 0.2s;
+      }
+
+      input:focus,
+      select:focus,
+      textarea:focus {
+        outline: none;
+        border-color: #c9a53b;
+        box-shadow: 0 0 0 3px rgba(201, 165, 59, 0.2);
+      }
+
+      .btn {
+        border: none;
+        background: #8b5a2b;
+        color: white;
+        font-weight: 600;
+        padding: 0.9rem 1.5rem;
+        border-radius: 2rem;
+        cursor: pointer;
+        width: 100%;
+        font-size: 1rem;
+        transition: all 0.25s;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      .btn:hover {
+        background: #a5713a;
+        transform: translateY(-2px);
+      }
+
+      .btn-secondary {
+        background: #2d6a4f;
+      }
+
+      .btn-secondary:hover {
+        background: #1f543e;
+      }
+
+      .message-area {
+        margin-top: 1rem;
+        padding: 1rem;
+        border-radius: 1.5rem;
+        background: #eef4ea;
+        text-align: center;
+        font-weight: 500;
+        transition: 0.2s;
+      }
+
+      /* Goodwill message section (for everyone) */
+      .goodwill-section {
+        background: #fef7e8;
+        border-radius: 1.8rem;
+        padding: 1.5rem;
+        margin: 2rem 0 1.8rem;
+        text-align: center;
+        border-left: 6px solid #dbb42c;
+      }
+
+      .goodwill-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #9c6e2b;
+        margin-bottom: 0.75rem;
+      }
+
+      .goodwill-text {
+        font-size: 1rem;
+        color: #3b3a2c;
+        max-width: 700px;
+        margin: 0 auto;
+        line-height: 1.5;
+      }
+
+      /* add to calendar row */
+      .calendar-wrapper {
+        text-align: center;
+        margin: 1rem 0 1rem;
+      }
+
+      .calendar-btn-row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 0.75rem;
+      }
+
+      .cal-btn {
+        background: #f0e7d6;
+        border: none;
+        padding: 0.6rem 1.2rem;
+        border-radius: 2rem;
+        font-weight: 500;
+        font-size: 0.85rem;
+        cursor: pointer;
+        transition: 0.2s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #3a2a1f;
+      }
+
+      .cal-btn:hover {
+        background: #e2d4bc;
+        transform: scale(0.97);
+      }
+
+      /* rsvp list (submissions preview) */
+      .rsvp-list-section {
+        margin-top: 2.2rem;
+        padding-top: 1rem;
+      }
+
+      .rsvp-list-title {
+        font-weight: 600;
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+        border-left: 4px solid #daa520;
+        padding-left: 0.8rem;
+      }
+
+      .rsvp-items {
+        max-height: 220px;
+        overflow-y: auto;
+        background: rgba(245, 240, 225, 0.7);
+        border-radius: 1.2rem;
+        padding: 0.8rem;
+      }
+
+      .rsvp-item {
+        background: white;
+        border-radius: 2rem;
+        padding: 0.6rem 1rem;
+        margin-bottom: 0.6rem;
+        font-size: 0.85rem;
+        display: flex;
+        justify-content: space-between;
+        border: 1px solid #efdfb7;
+      }
+
+      .attending-badge {
+        background: #2b7a4b;
+        color: white;
+        border-radius: 20px;
+        padding: 0.2rem 0.6rem;
+        font-size: 0.7rem;
+        font-weight: bold;
+      }
+
+      .not-attending-badge {
+        background: #a05e2c;
+        color: white;
+        border-radius: 20px;
+        padding: 0.2rem 0.6rem;
+      }
+
+      footer {
+        text-align: center;
+        margin-top: 2rem;
+        font-size: 0.75rem;
+        color: #f3efdf;
+        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+      }
+
+      @media (max-width: 680px) {
+        .event-title {
+          font-size: 1.5rem;
+        }
+        .badge {
+          font-size: 0.75rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Background slideshow: 4 images fade -->
+    <div class="slideshow-bg" id="slideshowBg">
+      <div
+        class="slide"
+        style="background-image: url(&quot;/images/bg1.jpg&quot;); opacity: 1"
+        id="slide0"
+      ></div>
+      <div
+        class="slide"
+        style="background-image: url(&quot;/images/bg2.jpg&quot;)"
+        id="slide1"
+      ></div>
+      <div
+        class="slide"
+        style="background-image: url(&quot;/images/bg3.jpg&quot;)"
+        id="slide2"
+      ></div>
+      <div
+        class="slide"
+        style="background-image: url(&quot;/images/bg2.jpg&quot;)"
+        id="slide3"
+      ></div>
+      <!-- note: using high-quality random academic/church-like ambiance images from Lorem Picsum (free) -->
+    </div>
+    <div class="overlay"></div>
+
+    <div class="container">
+      <div class="card">
+        <div class="event-header">
+          <h1 class="event-title">🎓 Thanksgiving of Academic Excellence 🎉</h1>
+          <div class="honorific">Honouring Prof. Cecilia A. Beshel</div>
+          <div class="date-venue">
+            <span class="badge">📅 Saturday, 10th May 2026</span>
+            <span class="badge">⏰ 10:00 AM (WAT)</span>
+            <span class="badge"
+              >📍 St. Patrick’s Catholic Church, Ikot Ansa, Calabar</span
+            >
+          </div>
+        </div>
+
+        <!-- GOODWILL MESSAGE for everyone (attending or not) -->
+        <div class="goodwill-section">
+          <div class="goodwill-title">✨ A Word of Goodwill ✨</div>
+          <div class="goodwill-text">
+            Whether you stand with us in person or in spirit, your presence,
+            prayers, and encouragement uplift the celebration of academic
+            excellence. Prof. Cecilia A. Beshel extends heartfelt gratitude to
+            every mentor, student, colleague, and friend. May your own journey
+            be illumined with wisdom and favor. We are grateful for YOU!
+          </div>
+        </div>
+
+        <!-- RSVP CORE + add-to-calendar row -->
+        <div class="rsvp-grid">
+          <div class="form-col">
+            <h3 style="font-weight: 600; margin-bottom: 1rem; color: #daa520">
+              📋 RSVP Form
+            </h3>
+            <form id="rsvpForm">
+              <div class="form-group">
+                <label>Full Name *</label>
+                <input
+                  type="text"
+                  id="fullname"
+                  placeholder="e.g., Emem James"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label>Email Address *</label>
+                <input
+                  type="email"
+                  id="email"
+                  placeholder="you@example.com"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label>Attendance Status *</label>
+                <select id="attending" required>
+                  <option value="yes">Yes, I will attend with joy!</option>
+                  <option value="no">
+                    Regretfully, I cannot attend, but sending goodwill 
+                  </option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Message / Note</label>
+                <textarea
+                  rows="2"
+                  id="message" required
+                  placeholder="Any special note or prayer..."
+                ></textarea>
+              </div>
+              <button type="submit" class="btn">💝 Submit RSVP</button>
+            </form>
+            <div
+              id="formFeedback"
+              class="message-area"
+              style="display: none"
+            ></div>
+          </div>
+
+          <div class="form-col">
+            <h3 style="font-weight: 600; margin-bottom: 0.7rem; color: #daa520">
+              📆 Save the Date
+            </h3>
+            <p style="font-size: 0.9rem; margin-bottom: 0.75rem; color: #fff">
+              Add the thanksgiving event to your calendar (any device).
+            </p>
+            <div class="calendar-wrapper">
+              <div class="calendar-btn-row">
+                <button class="cal-btn" id="googleCalBtn">
+                  📧 Google Calendar
+                </button>
+                <button class="cal-btn" id="icsCalBtn">
+                  📅 Download .ics (Apple / Outlook)
+                </button>
+                <button class="cal-btn" id="outlookWebBtn">
+                  🌐 Outlook Live
+                </button>
+              </div>
+              <div
+                style="font-size: 0.7rem; margin-top: 0.8rem; color: #6b5a3a"
+              >
+                ✓ Works on iPhone, Android, Mac, Windows — all devices
+              </div>
+            </div>
+
+            <!-- Live RSVP summary to show goodwill submissions -->
+            <div class="rsvp-list-section">
+              <div class="rsvp-list-title" style="color: #daa520">
+                💬 Recent RSVP & Goodwill Notes
+              </div>
+              <div id="rsvpListContainer" class="rsvp-items">
+                <div style="text-align: center; color: #7f6a46">
+                  — submissions will appear here —
+                </div>
+              </div>
+              <p
+                style="
+                  font-size: 0.7rem;
+                  margin-top: 0.6rem;
+                  text-align: center;
+                "
+              >
+                *Celebrating every response, attending or not*
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer>
+        © 2026 – Honoring Prof. Cecilia A. Beshel | Powered by BellaTECH NG.
+      </footer>
+    </div>
+
+    <script>
+      // ---------- BACKGROUND SLIDESHOW FADE (4 images) ----------
+      const slides = document.querySelectorAll(".slide");
+      let currentSlide = 0;
+      const totalSlides = slides.length;
+      let intervalId;
+
+      function startSlideshow() {
+        if (intervalId) clearInterval(intervalId);
+        intervalId = setInterval(() => {
+          let next = (currentSlide + 1) % totalSlides;
+          // fade out current, fade in next
+          slides[currentSlide].style.opacity = "0";
+          slides[next].style.opacity = "1";
+          currentSlide = next;
+        }, 5500);
+      }
+
+      // initial opacity: first slide visible, others hidden  (already set inline for slide0: opacity1)
+      for (let i = 1; i < totalSlides; i++) {
+        slides[i].style.opacity = "0";
+      }
+      startSlideshow();
+
+      // ---------- RSVP LOGIC (stores data via localStorage, simulates email submission later) ----------
+      // The problem says: "the logic will be submitted via email js so put that into consideration as well"
+      // We'll implement array of rsvpEntries, store into localStorage, also provide a simulated "email submission"
+      // For real EmailJS, the hook can be easily adapted – I'll provide a demo integration point: after each RSVP, we trigger emailjs-like simulation.
+      // According to requirement: I'll leave a clear function `sendViaEmailJS(entry)` where actual EmailJS can replace.
+      // I'll also make sure the RSVP data persists across refreshes and shows goodwill messages for everyone.
+
+      let rsvpEntries = [];
+
+      // Load existing entries from localStorage
+      function loadEntriesFromStorage() {
+        const stored = localStorage.getItem("prof_beshel_rsvp");
+        if (stored) {
+          try {
+            rsvpEntries = JSON.parse(stored);
+          } catch (e) {
+            rsvpEntries = [];
+          }
+        } else {
+          // Add some dummy goodwill messages to illustrate
+          rsvpEntries = [
+            {
+              name: "Dr. Michael Okon",
+              email: "michael@example.com",
+              attending: "yes",
+              message: "Congratulations Prof! Celebrating your excellence!",
+              timestamp: Date.now() - 86400000,
+            },
+            {
+              name: "Sister Grace Ene",
+              email: "grace@example.com",
+              attending: "no",
+              message: "Praying from afar! God bless your academic impact.",
+              timestamp: Date.now() - 43200000,
+            },
+            {
+              name: "Prof. Anthony Bassey",
+              email: "anthony@example.com",
+              attending: "yes",
+              message: "Proud to honour a great mentor.",
+              timestamp: Date.now() - 21600000,
+            },
+          ];
+          localStorage.setItem("prof_beshel_rsvp", JSON.stringify(rsvpEntries));
+        }
+        renderRsvpList();
+      }
+
+      // Save to localStorage & re-render
+      function saveEntries() {
+        localStorage.setItem("prof_beshel_rsvp", JSON.stringify(rsvpEntries));
+        renderRsvpList();
+      }
+
+      // Function to simulate / integrate EmailJS submission logic (with real implementation hint)
+      // Since the email will be submitted "via email js", I'm adding functional placeholder that can be replaced.
+      // In a production scenario, user would include EmailJS SDK and replace this.
+      function triggerEmailJSNotification(newEntry) {
+        // This is the integration point for EmailJS - per requirement, the logic will be submitted via EmailJS.
+        // For the purpose of this demo, we log to console and display a friendly note.
+        // To enable actual email: include EmailJS library, initialize with your userID, template params.
+        console.log(
+          "[EmailJS integration point] Sending RSVP confirmation / notification to admin:",
+          newEntry,
+        );
+        // Example (commented) code using EmailJS:
+        /*
+    emailjs.send("service_xxx", "template_rsvp", {
+      to_name: "Prof. Cecilia",
+      from_name: newEntry.name,
+      attend_status: newEntry.attending === "yes" ? "Attending" : "Not attending",
+      message: newEntry.message || "No message",
+      reply_email: newEntry.email
+    }).then(() => console.log("EmailJS success!"));
+    */
+        // Since we are demonstrating functionality, we show feedback that email logic is ready.
+        // We'll also optionally show a little message in feedback.
+        const feedbackDiv = document.getElementById("formFeedback");
+        feedbackDiv.style.display = "block";
+        feedbackDiv.innerHTML = `✅ RSVP recorded! ${newEntry.attending === "yes" ? "We look forward to seeing you! 🎓" : "Thank you for your goodwill message ✨"} (Email notification simulated. Configure EmailJS to send actual mail.)`;
+        setTimeout(() => {
+          if (feedbackDiv) feedbackDiv.style.opacity = "1";
+          setTimeout(() => {
+            feedbackDiv.style.display = "none";
+          }, 4000);
+        }, 100);
+      }
+
+      // Render RSVP list (showing name, attending or not, goodwill message snippet)
+      function renderRsvpList() {
+        const container = document.getElementById("rsvpListContainer");
+        if (!container) return;
+        if (!rsvpEntries.length) {
+          container.innerHTML =
+            '<div style="text-align:center; color:#7f6a46;">No RSVPs yet — be the first to share goodwill ✨</div>';
+          return;
+        }
+        // show latest first (reverse chronological)
+        const reversed = [...rsvpEntries].reverse();
+        const itemsHtml = reversed
+          .slice(0, 12)
+          .map(
+            (entry) => `
+      <div class="rsvp-item">
+        <div><strong>${escapeHtml(entry.name)}</strong><br><span style="font-size:0.7rem;">${entry.message ? escapeHtml(entry.message.substring(0, 80)) : "✨ goodwill"}</span></div>
+        <div>${entry.attending === "yes" ? '<span class="attending-badge">Attending 🎉</span>' : '<span class="not-attending-badge">In Spirit 🙏</span>'}</div>
+      </div>
+    `,
+          )
+          .join("");
+        container.innerHTML = itemsHtml;
+      }
+
+      // simple XSS sanitization
+      function escapeHtml(str) {
+        if (!str) return "";
+        return str
+          .replace(/[&<>]/g, function (m) {
+            if (m === "&") return "&amp;";
+            if (m === "<") return "&lt;";
+            if (m === ">") return "&gt;";
+            return m;
+          })
+          .replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function (c) {
+            return c;
+          });
+      }
+
+      // RSVP submit handler
+      const form = document.getElementById("rsvpForm");
+      const nameInput = document.getElementById("fullname");
+      const emailInput = document.getElementById("email");
+      const attendingSelect = document.getElementById("attending");
+      const messageText = document.getElementById("message");
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const name = nameInput.value.trim();
+        const email = emailInput.value.trim();
+        const attending = attendingSelect.value;
+        const guestMessage = messageText.value.trim();
+
+        if (!name || !email) {
+          const fb = document.getElementById("formFeedback");
+          fb.style.display = "block";
+          fb.innerHTML = "⚠️ Please enter both name and email address.";
+          setTimeout(() => {
+            fb.style.display = "none";
+          }, 3000);
+          return;
+        }
+        if (!email.includes("@") || !email.includes(".")) {
+          const fb = document.getElementById("formFeedback");
+          fb.style.display = "block";
+          fb.innerHTML = "⚠️ Please enter a valid email address.";
+          setTimeout(() => {
+            fb.style.display = "none";
+          }, 3000);
+          return;
+        }
+
+        const newEntry = {
+          name: name,
+          email: email,
+          attending: attending,
+          message:
+            guestMessage ||
+            (attending === "yes"
+              ? "Excited to celebrate!"
+              : "Prayers and warm wishes."),
+          timestamp: Date.now(),
+        };
+        rsvpEntries.push(newEntry);
+        saveEntries();
+        // Clear form fields except message optional kept or clear all
+        nameInput.value = "";
+        emailInput.value = "";
+        messageText.value = "";
+        attendingSelect.value = "yes"; // reset to default
+
+        // show immediate goodwill feedback and trigger emailJS integration
+        triggerEmailJSNotification(newEntry);
+      });
+
+      // ---------- ADD TO CALENDAR (universal for all devices) ----------
+      // Event details: 10th May 2026, 10:00 AM West Africa Time (UTC+1)
+      // We'll generate start/end times: 10:00 AM -> 1:00 PM approx (3 hours celebration)
+      function buildEventDateTime() {
+        // For 2026-05-10 at 10:00 AM in Calabar (WAT = UTC+1)
+        // Construct UTC string: May 10, 2026, 09:00:00 UTC? Actually UTC+1 offset -> 9:00 UTC start.
+        const startUTC = new Date(Date.UTC(2026, 4, 10, 9, 0, 0)); // month 4 = May
+        const endUTC = new Date(Date.UTC(2026, 4, 10, 12, 0, 0)); // 12:00 UTC = 1pm WAT
+        return { start: startUTC, end: endUTC };
+      }
+
+      function formatDateForGoogle(d) {
+        return d.toISOString().replace(/-|:|\.\d+/g, "");
+      }
+
+      function generateGoogleUrl() {
+        const { start, end } = buildEventDateTime();
+        const startStr = formatDateForGoogle(start);
+        const endStr = formatDateForGoogle(end);
+        const details = encodeURIComponent(
+          "Join us to honor Prof. Cecilia A. Beshel's academic excellence. Goodwill messages embrace all. St. Patrick's Catholic Church, Ikot Ansa, Calabar.",
+        );
+        const location = encodeURIComponent(
+          "St. Patrick's Catholic Church, Ikot Ansa, Calabar, Nigeria",
+        );
+        const title = encodeURIComponent(
+          "Thanksgiving of Academic Excellence - Prof. Cecilia A. Beshel",
+        );
+        return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startStr}/${endStr}&details=${details}&location=${location}&sf=true&output=xml`;
+      }
+
+      function generateIcsBlob() {
+        const { start, end } = buildEventDateTime();
+        const formatICS = (date) => {
+          return date.toISOString().replace(/-|:|\.\d+/g, "");
+        };
+        const startIcs = formatICS(start);
+        const endIcs = formatICS(end);
+        const icsContent = [
+          "BEGIN:VCALENDAR",
+          "VERSION:2.0",
+          "PRODID:-//Prof Beshel RSVP//EN",
+          "BEGIN:VEVENT",
+          "UID:" + Date.now() + "-beshel@event",
+          "DTSTAMP:" + formatICS(new Date()),
+          "DTSTART:" + startIcs,
+          "DTEND:" + endIcs,
+          "SUMMARY:Thanksgiving of Academic Excellence - Prof. Cecilia A. Beshel",
+          "DESCRIPTION:Join us at St. Patrick's Catholic Church Ikot Ansa Calabar. A celebration of academic excellence and goodwill. All well-wishers welcome!",
+          "LOCATION:St. Patrick's Catholic Church, Ikot Ansa, Calabar",
+          "END:VEVENT",
+          "END:VCALENDAR",
+        ].join("\r\n");
+        return new Blob([icsContent], { type: "text/calendar" });
+      }
+
+      function outlookWebUrl() {
+        const { start, end } = buildEventDateTime();
+        const startOutlook = start.toISOString();
+        const endOutlook = end.toISOString();
+        const subject = encodeURIComponent(
+          "Thanksgiving of Academic Excellence - Prof. Cecilia A. Beshel",
+        );
+        const body = encodeURIComponent(
+          "You're invited to the Thanksgiving of Academic Excellence in honour of Prof. Cecilia A. Beshel on 10th May 2026 at 10:00 AM at St. Patrick's Catholic Church, Ikot Ansa, Calabar. Goodwill for everyone.",
+        );
+        const location = encodeURIComponent(
+          "St. Patrick's Catholic Church, Ikot Ansa, Calabar",
+        );
+        return `https://outlook.live.com/calendar/0/deeplink/compose?subject=${subject}&startdt=${startOutlook}&enddt=${endOutlook}&body=${body}&location=${location}&path=/calendar/action/compose`;
+      }
+
+      document.getElementById("googleCalBtn").addEventListener("click", () => {
+        window.open(generateGoogleUrl(), "_blank");
+      });
+      document.getElementById("icsCalBtn").addEventListener("click", () => {
+        const blob = generateIcsBlob();
+        const link = document.createElement("a");
+        const url = URL.createObjectURL(blob);
+        link.href = url;
+        link.download = "prof_beshel_thanksgiving.ics";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+      });
+      document.getElementById("outlookWebBtn").addEventListener("click", () => {
+        window.open(outlookWebUrl(), "_blank");
+      });
+
+      // initial load
+      loadEntriesFromStorage();
+      // Also handle slideshow if user leaves tab?
+      window.addEventListener("focus", () => {
+        if (intervalId) clearInterval(intervalId);
+        startSlideshow();
+      });
+    </script>
+  </body>
+</html>
