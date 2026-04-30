@@ -12,6 +12,10 @@
       href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
       rel="stylesheet"
     />
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"
+    ></script>
     <style>
       * {
         margin: 0;
@@ -554,21 +558,21 @@
           rsvpEntries = [
             {
               name: "Dr. Michael Okon",
-              email: "michael@example.com",
+              email: "michaelokon@gmail.com",
               attending: "yes",
               message: "Congratulations Prof! Celebrating your excellence!",
               timestamp: Date.now() - 86400000,
             },
             {
               name: "Sister Grace Ene",
-              email: "grace@example.com",
+              email: "graceene1@gmail.com",
               attending: "no",
               message: "Praying from afar! God bless your academic impact.",
               timestamp: Date.now() - 43200000,
             },
             {
               name: "Prof. Anthony Bassey",
-              email: "anthony@example.com",
+              email: "anthonybasseyphd@gmail.com",
               attending: "yes",
               message: "Proud to honour a great mentor.",
               timestamp: Date.now() - 21600000,
@@ -585,38 +589,49 @@
         renderRsvpList();
       }
 
-      // Function to simulate / integrate EmailJS submission logic (with real implementation hint)
-      // Since the email will be submitted "via email js", I'm adding functional placeholder that can be replaced.
-      // In a production scenario, user would include EmailJS SDK and replace this.
+      emailjs.init("_PEwD_ZbRO1EoYbHU");
+
       function triggerEmailJSNotification(newEntry) {
-        // This is the integration point for EmailJS - per requirement, the logic will be submitted via EmailJS.
-        // For the purpose of this demo, we log to console and display a friendly note.
-        // To enable actual email: include EmailJS library, initialize with your userID, template params.
-        console.log(
-          "[EmailJS integration point] Sending RSVP confirmation / notification to admin:",
-          newEntry,
-        );
-        // Example (commented) code using EmailJS:
-        /*
-    emailjs.send("service_xxx", "template_rsvp", {
-      to_name: "Prof. Cecilia",
-      from_name: newEntry.name,
-      attend_status: newEntry.attending === "yes" ? "Attending" : "Not attending",
-      message: newEntry.message || "No message",
-      reply_email: newEntry.email
-    }).then(() => console.log("EmailJS success!"));
-    */
-        // Since we are demonstrating functionality, we show feedback that email logic is ready.
-        // We'll also optionally show a little message in feedback.
         const feedbackDiv = document.getElementById("formFeedback");
-        feedbackDiv.style.display = "block";
-        feedbackDiv.innerHTML = `✅ RSVP recorded! ${newEntry.attending === "yes" ? "We look forward to seeing you! 🎓" : "Thank you for your goodwill message ✨"}`;
-        setTimeout(() => {
-          if (feedbackDiv) feedbackDiv.style.opacity = "1";
-          setTimeout(() => {
-            feedbackDiv.style.display = "none";
-          }, 4000);
-        }, 100);
+
+        // Prepare template parameters for EmailJS
+        const templateParams = {
+          to_name: "Prof. Cecilia A. Beshel",
+          from_name: newEntry.name,
+          from_email: newEntry.email,
+          attend_status:
+            newEntry.attending === "yes"
+              ? "✅ Attending in person 🎉"
+              : "🙏 Not attending (sending goodwill 💐)",
+          message: newEntry.message || "No additional message provided.",
+          event_date: "10th May 2026",
+          event_location: "St. Patrick's Catholic Church, Ikot Ansa, Calabar",
+          reply_to_email: newEntry.email,
+        };
+
+        // Send email using EmailJS - REPLACE THESE WITH YOUR ACTUAL IDs
+        emailjs
+          .send("service_2lly29s", "template_uwphwco", templateParams)
+          .then(function (response) {
+            console.log("EmailJS success:", response);
+            feedbackDiv.style.display = "block";
+            feedbackDiv.style.background = "#d4edda";
+            feedbackDiv.style.color = "#155724";
+            feedbackDiv.innerHTML = `✅ RSVP recorded! ${newEntry.attending === "yes" ? "We look forward to seeing you! 🎓 A confirmation email has been sent." : "Thank you for your goodwill message ✨ Your kind words have been shared with Prof. Beshel."}`;
+            setTimeout(() => {
+              feedbackDiv.style.display = "none";
+            }, 5000);
+          })
+          .catch(function (error) {
+            console.error("EmailJS failed:", error);
+            feedbackDiv.style.display = "block";
+            feedbackDiv.style.background = "#f8d7da";
+            feedbackDiv.style.color = "#721c24";
+            feedbackDiv.innerHTML = `⚠️ RSVP recorded, but email notification failed. Error: ${error.text || "Unkowkn error"}`;
+            setTimeout(() => {
+              feedbackDiv.style.display = "none";
+            }, 6000);
+          });
       }
 
       // Render RSVP list (showing name, attending or not, goodwill message snippet)
